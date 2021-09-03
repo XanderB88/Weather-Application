@@ -10,81 +10,121 @@ import UIKit
 class ViewController: UIViewController {
     lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "background")
+        imageView.image = #imageLiteral(resourceName: "white-clouds-in-the-sky-iphone-7-wallpaper-1080x1920_66d50aee72ada8437c16462cc18fe703_raw")
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    lazy var containerView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.4)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    lazy var containerView: UIVisualEffectView = {
+        let view = UIVisualEffectView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
-    lazy var dayDescriptoinText: UITextView = {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.text = "Rainy morning"
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
+    lazy var dayDescriptoinLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Rainy morning"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    lazy var dayAndTimeText: UITextView = {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.text = "Tusday 7:03AM"
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
+    lazy var weekDayAndTimeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Tusday 7:03AM"
+        label.font = UIFont.systemFont(ofSize: 18, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
+    
+    lazy var cityNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Samara"
+        label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var weatherView: UIVisualEffectView = {
+        let view = UIVisualEffectView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    fileprivate func weatherViewLayout() {
+        NSLayoutConstraint.activate([
+                                        weatherView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                        weatherView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                                        weatherView.heightAnchor.constraint(equalToConstant: 200),
+                                        weatherView.widthAnchor.constraint(equalToConstant: 350)])
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        
         
         view.addSubview(backgroundImageView)
+        setupBackgroundLayout()
+        
         view.addSubview(containerView)
-        view.addSubview(dayDescriptoinText)
-        view.addSubview(dayAndTimeText)
-        setupLayout()
+        containerView.effect = blurEffect
+        setupContainerLayout()
         
+        view.addSubview(dayDescriptoinLabel)
+        setupDescriptionLabelLayout()
         
+        view.addSubview(weekDayAndTimeLabel)
+        setupWeekDayAndTimeLabelLayout()
+        
+        view.addSubview(cityNameLabel)
+        setupCityNameLabelLayout()
+        
+        view.addSubview(weatherView)
+        weatherView.effect = blurEffect
+        weatherViewLayout()
     }
     
-    func setupLayout() {
+    fileprivate func setupBackgroundLayout() {
         NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            containerView.topAnchor.constraint(equalTo: view.topAnchor),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            dayDescriptoinText.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            dayDescriptoinText.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
-            dayDescriptoinText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-            dayDescriptoinText.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
-            dayDescriptoinText.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 25),
-            
-            dayAndTimeText.topAnchor.constraint(equalTo: dayDescriptoinText.topAnchor, constant: 20),
-            dayAndTimeText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-            dayAndTimeText.widthAnchor.constraint(equalTo: view.widthAnchor, constant: 120),
-            dayAndTimeText.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 25),
-        ])
+                                        backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+                                        backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                        backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                        backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+    }
+    
+    
+    fileprivate func setupContainerLayout() {
+        NSLayoutConstraint.activate([
+                                        containerView.topAnchor.constraint(equalTo: view.topAnchor),
+                                        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                        containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                        containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+    }
+    
+    fileprivate func setupDescriptionLabelLayout() {
+        NSLayoutConstraint.activate([
+                                        dayDescriptoinLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+                                        dayDescriptoinLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60)])
+    }
+    
+    fileprivate func setupWeekDayAndTimeLabelLayout() {
+        NSLayoutConstraint.activate([
+                                        weekDayAndTimeLabel.topAnchor.constraint(equalTo: dayDescriptoinLabel.topAnchor, constant: 30),
+                                        weekDayAndTimeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60)])
+    }
+    
+    fileprivate func setupCityNameLabelLayout() {
+        NSLayoutConstraint.activate([
+                                        cityNameLabel.topAnchor.constraint(equalTo: weekDayAndTimeLabel.topAnchor, constant: 120),
+                                        cityNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)])
     }
 }
-extension UIImageView
+extension UIView
 {
-    func addBlurEffect() {
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = self.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.addSubview(blurEffectView)
-    }
     
     func setGradientBackground(colorTop: UIColor, colorBottom: UIColor){
         let gradientLayer = CAGradientLayer()
