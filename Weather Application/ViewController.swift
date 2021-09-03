@@ -54,12 +54,45 @@ class ViewController: UIViewController {
         return view
     }()
     
+    lazy var weatherTopStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [temperatureLabel, weatherImageView])
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.spacing = 30.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    lazy var temperatureLabel: UILabel = {
+        let label = UILabel()
+        label.text = "22°C"
+        label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var weatherImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "AppIcon40x40")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     fileprivate func weatherViewLayout() {
         NSLayoutConstraint.activate([
                                         weatherView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                                         weatherView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                                        weatherView.heightAnchor.constraint(equalToConstant: 200),
+                                        weatherView.heightAnchor.constraint(equalToConstant: 220),
                                         weatherView.widthAnchor.constraint(equalToConstant: 350)])
+    }
+    
+    fileprivate func weatherTopStackViewLayout() {
+        NSLayoutConstraint.activate([
+                                        weatherTopStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                        weatherTopStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                                        weatherTopStackView.heightAnchor.constraint(equalToConstant: 50),
+                                        weatherTopStackView.widthAnchor.constraint(equalToConstant: 300)])
     }
     
     override func viewDidLoad() {
@@ -86,6 +119,9 @@ class ViewController: UIViewController {
         view.addSubview(weatherView)
         weatherView.effect = blurEffect
         weatherViewLayout()
+        
+        weatherView.contentView.addSubview(weatherTopStackView)
+        weatherTopStackViewLayout()
     }
     
     fileprivate func setupBackgroundLayout() {
