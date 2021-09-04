@@ -147,6 +147,13 @@ class ViewController: UIViewController {
         return scrollView
     }()
     
+    
+    var orientations = UIInterfaceOrientationMask.portrait //or what orientation you want
+        override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        get { return self.orientations }
+        set { self.orientations = newValue }
+        }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
