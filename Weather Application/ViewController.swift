@@ -149,7 +149,7 @@ class ViewController: UIViewController {
     // MARK: - Week weather scrollView
     lazy var dayWeatherScrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
-        scrollView.frame = self.view.bounds
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -277,6 +277,10 @@ class ViewController: UIViewController {
         dayWeatherViewLayout()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        dayWeatherScrollView.contentSize = CGSize(width: dayWeatherScrollContainer.frame.width + 850, height: dayWeatherScrollContainer.frame.height)
+    }
+    
     // MARK: - Background constraints
     fileprivate func setupBackgroundLayout() {
         NSLayoutConstraint.activate([
@@ -357,14 +361,13 @@ class ViewController: UIViewController {
                                         dayWeatherScrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 630),
                                         dayWeatherScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
                                         dayWeatherScrollView.heightAnchor.constraint(equalToConstant: 150),
-                                        dayWeatherScrollView.widthAnchor.constraint(equalToConstant: 1000)])
+                                        dayWeatherScrollView.widthAnchor.constraint(equalToConstant: 1200)])
     }
     
     fileprivate func dayWeatherScrollStackLayout() {
         NSLayoutConstraint.activate([
                                         dayWeatherScrollContainer.topAnchor.constraint(equalTo: dayWeatherScrollView.topAnchor),
                                         dayWeatherScrollContainer.leadingAnchor.constraint(equalTo: dayWeatherScrollView.leadingAnchor),
-                                        dayWeatherScrollContainer.trailingAnchor.constraint(equalTo: dayWeatherScrollView.trailingAnchor),
                                         dayWeatherScrollContainer.bottomAnchor.constraint(equalTo: dayWeatherScrollView.bottomAnchor)])
     }
     
