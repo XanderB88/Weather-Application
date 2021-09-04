@@ -19,6 +19,8 @@ class ViewController: UIViewController {
     
     lazy var containerView: UIVisualEffectView = {
         let view = UIVisualEffectView()
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        view.effect = blurEffect
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -40,7 +42,7 @@ class ViewController: UIViewController {
         return label
     }()
     
-    // MARK: - Weather card with city name
+    // MARK: - WeatherView card with city name
     lazy var cityNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Samara"
@@ -51,13 +53,15 @@ class ViewController: UIViewController {
     
     lazy var weatherView: UIVisualEffectView = {
         let view = UIVisualEffectView()
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        view.effect = blurEffect
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-   
-    // MARK: - Weather topstack
+    
+    // MARK: - Weather topstackView
     lazy var weatherTopStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [temperatureLabel, weatherImageView])
         stackView.axis = .horizontal
@@ -82,7 +86,7 @@ class ViewController: UIViewController {
         return imageView
     }()
     
-    // MARK: - Weather bottomstack
+    // MARK: - Weather bottomstackView
     lazy var weatherBottomStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [humidityStackView, windStackView])
         stackView.axis = .horizontal
@@ -142,28 +146,107 @@ class ViewController: UIViewController {
         return label
     }()
     
+    // MARK: - Week weather scrollView
     lazy var dayWeatherScrollView: UIScrollView = {
-        let scrollView = UIScrollView()
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.frame = self.view.bounds
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
+    lazy var dayWeatherScrollContainer: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [mondayWeatherView, tuesdayWeatherView, wednesdayWeatherView, thursdayWeatherView,fridayWeatherView, saturdayWeatherView, sundayWeatherView])
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
-    var orientations = UIInterfaceOrientationMask.portrait //or what orientation you want
-        override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    lazy var mondayWeatherView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let view = UIVisualEffectView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.effect = blurEffect
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var tuesdayWeatherView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let view = UIVisualEffectView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.effect = blurEffect
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var wednesdayWeatherView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let view = UIVisualEffectView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.effect = blurEffect
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var thursdayWeatherView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let view = UIVisualEffectView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.effect = blurEffect
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var fridayWeatherView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let view = UIVisualEffectView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.effect = blurEffect
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var saturdayWeatherView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let view = UIVisualEffectView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.effect = blurEffect
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var sundayWeatherView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let view = UIVisualEffectView()
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.effect = blurEffect
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    //    Lock portrait orientation
+    var orientations = UIInterfaceOrientationMask.portrait
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         get { return self.orientations }
         set { self.orientations = newValue }
-        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
-        
         
         view.addSubview(backgroundImageView)
         setupBackgroundLayout()
         
         view.addSubview(containerView)
-        containerView.effect = blurEffect
         setupContainerLayout()
         
         view.addSubview(dayDescriptoinLabel)
@@ -176,7 +259,6 @@ class ViewController: UIViewController {
         setupCityNameLabelLayout()
         
         view.addSubview(weatherView)
-        weatherView.effect = blurEffect
         weatherViewLayout()
         
         weatherView.contentView.addSubview(weatherTopStackView)
@@ -186,6 +268,13 @@ class ViewController: UIViewController {
         weatherView.contentView.addSubview(weatherBottomStackView)
         humidityAndWindStackLayout()
         weatherBottomStackViewLayout()
+        
+        view.addSubview(dayWeatherScrollView)
+        dayWeatherScrollLayout()
+        
+        dayWeatherScrollView.addSubview(dayWeatherScrollContainer)
+        dayWeatherScrollStackLayout()
+        dayWeatherViewLayout()
     }
     
     // MARK: - Background constraints
@@ -219,7 +308,7 @@ class ViewController: UIViewController {
                                         weekDayAndTimeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30)])
     }
     
-    // MARK: - Weather card with city name constraints
+    // MARK: - WeatherView card with city name constraints
     fileprivate func setupCityNameLabelLayout() {
         NSLayoutConstraint.activate([
                                         cityNameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 220),
@@ -233,7 +322,7 @@ class ViewController: UIViewController {
                                         weatherView.heightAnchor.constraint(equalToConstant: 220),
                                         weatherView.widthAnchor.constraint(equalToConstant: 350)])
     }
-   
+    
     fileprivate func weatherImageViewLayout() {
         NSLayoutConstraint.activate([
                                         weatherImageView.heightAnchor.constraint(equalToConstant: 70),
@@ -262,9 +351,48 @@ class ViewController: UIViewController {
                                         weatherBottomStackView.heightAnchor.constraint(equalToConstant: 70),
                                         weatherBottomStackView.widthAnchor.constraint(equalToConstant: 290)])
     }
+    
+    fileprivate func dayWeatherScrollLayout() {
+        NSLayoutConstraint.activate([
+                                        dayWeatherScrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 630),
+                                        dayWeatherScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+                                        dayWeatherScrollView.heightAnchor.constraint(equalToConstant: 150),
+                                        dayWeatherScrollView.widthAnchor.constraint(equalToConstant: 1000)])
+    }
+    
+    fileprivate func dayWeatherScrollStackLayout() {
+        NSLayoutConstraint.activate([
+                                        dayWeatherScrollContainer.topAnchor.constraint(equalTo: dayWeatherScrollView.topAnchor),
+                                        dayWeatherScrollContainer.leadingAnchor.constraint(equalTo: dayWeatherScrollView.leadingAnchor),
+                                        dayWeatherScrollContainer.trailingAnchor.constraint(equalTo: dayWeatherScrollView.trailingAnchor),
+                                        dayWeatherScrollContainer.bottomAnchor.constraint(equalTo: dayWeatherScrollView.bottomAnchor)])
+    }
+    
+    fileprivate func dayWeatherViewLayout() {
+        NSLayoutConstraint.activate([
+                                        mondayWeatherView.heightAnchor.constraint(equalToConstant: 140),
+                                        mondayWeatherView.widthAnchor.constraint(equalToConstant: 80),
+        
+                                        tuesdayWeatherView.heightAnchor.constraint(equalToConstant: 140),
+                                        tuesdayWeatherView.widthAnchor.constraint(equalToConstant: 80),
+                                        
+                                        wednesdayWeatherView.heightAnchor.constraint(equalToConstant: 140),
+                                        wednesdayWeatherView.widthAnchor.constraint(equalToConstant: 80),
+                                        
+                                        thursdayWeatherView.heightAnchor.constraint(equalToConstant: 140),
+                                        thursdayWeatherView.widthAnchor.constraint(equalToConstant: 80),
+                                        
+                                        fridayWeatherView.heightAnchor.constraint(equalToConstant: 140),
+                                        fridayWeatherView.widthAnchor.constraint(equalToConstant: 80),
+                                        
+                                        saturdayWeatherView.heightAnchor.constraint(equalToConstant: 140),
+                                        saturdayWeatherView.widthAnchor.constraint(equalToConstant: 80),
+                                        
+                                        sundayWeatherView.heightAnchor.constraint(equalToConstant: 140),
+                                        sundayWeatherView.widthAnchor.constraint(equalToConstant: 80)])
+    }
 }
-extension UIVisualEffectView
-{
+extension UIVisualEffectView {
     func setGradientBackground(colorTop: UIColor, colorBottom: UIColor){
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [colorTop.cgColor, colorBottom.cgColor]
@@ -282,9 +410,9 @@ extension UIVisualEffectView
         layer.shadowOpacity = opacity
         layer.shadowOffset = offSet
         layer.shadowRadius = radius
-
+        
         layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
-      }
+    }
 }
