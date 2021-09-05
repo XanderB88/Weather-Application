@@ -65,8 +65,7 @@ class ViewController: UIViewController {
     lazy var weatherTopStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [temperatureLabel, weatherImageView])
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .center
+        stackView.spacing = 20
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -329,23 +328,20 @@ class ViewController: UIViewController {
     
     fileprivate func weatherImageViewLayout() {
         NSLayoutConstraint.activate([
-                                        weatherImageView.heightAnchor.constraint(equalToConstant: 70),
-                                        weatherImageView.widthAnchor.constraint(equalToConstant: 70)])
+                                        weatherImageView.heightAnchor.constraint(equalToConstant: 100),
+                                        weatherImageView.widthAnchor.constraint(equalToConstant: 100)])
     }
     
     fileprivate func weatherTopStackViewLayout() {
         NSLayoutConstraint.activate([
                                         weatherTopStackView.topAnchor.constraint(equalTo: weatherView.topAnchor, constant: 30),
-                                        weatherTopStackView.leadingAnchor.constraint(equalTo: weatherView.leadingAnchor, constant: 30),
-                                        weatherTopStackView.heightAnchor.constraint(equalToConstant: 70),
-                                        weatherTopStackView.widthAnchor.constraint(equalToConstant: 290)])
+                                        weatherTopStackView.centerXAnchor.constraint(equalTo: weatherView.centerXAnchor)])
     }
     
     fileprivate func humidityAndWindStackLayout() {
         NSLayoutConstraint.activate([
                                         humidityStackView.heightAnchor.constraint(equalToConstant: 40),
-                                        windStackView.heightAnchor.constraint(equalToConstant: 40),
-                                        windStackView.widthAnchor.constraint(equalToConstant: 70)])
+                                        windStackView.heightAnchor.constraint(equalToConstant: 40)])
     }
     
     fileprivate func weatherBottomStackViewLayout() {
@@ -358,7 +354,7 @@ class ViewController: UIViewController {
     
     fileprivate func dayWeatherScrollLayout() {
         NSLayoutConstraint.activate([
-                                        dayWeatherScrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 630),
+                                        dayWeatherScrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 650),
                                         dayWeatherScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
                                         dayWeatherScrollView.heightAnchor.constraint(equalToConstant: 150),
                                         dayWeatherScrollView.widthAnchor.constraint(equalToConstant: 1200)])
