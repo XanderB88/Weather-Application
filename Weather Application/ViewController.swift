@@ -8,6 +8,9 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+    
     // MARK: - Background of screen
     lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
@@ -53,7 +56,6 @@ class ViewController: UIViewController {
     
     lazy var weatherView: UIVisualEffectView = {
         let view = UIVisualEffectView()
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         view.effect = blurEffect
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
@@ -161,8 +163,8 @@ class ViewController: UIViewController {
         return stackView
     }()
     
+    // MARK: - Monday element in scrollview
     lazy var mondayWeatherView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let view = UIVisualEffectView()
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
@@ -171,8 +173,41 @@ class ViewController: UIViewController {
         return view
     }()
     
+    lazy var mondayLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Mon"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var mondayWeatherImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "sun")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    lazy var mondayTemperatureLabel: UILabel = {
+        let label = UILabel()
+        label.text = "20°C"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var mondayStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [mondayLabel, mondayWeatherImage, mondayTemperatureLabel])
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    // MARK: - Tuesday element in scrollview
     lazy var tuesdayWeatherView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let view = UIVisualEffectView()
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
@@ -181,8 +216,8 @@ class ViewController: UIViewController {
         return view
     }()
     
+    // MARK: - Wenesday element in scrollview
     lazy var wednesdayWeatherView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let view = UIVisualEffectView()
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
@@ -191,8 +226,8 @@ class ViewController: UIViewController {
         return view
     }()
     
+    // MARK: - Thursday element in scrollview
     lazy var thursdayWeatherView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let view = UIVisualEffectView()
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
@@ -201,8 +236,8 @@ class ViewController: UIViewController {
         return view
     }()
     
+    // MARK: - Friday element in scrollview
     lazy var fridayWeatherView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let view = UIVisualEffectView()
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
@@ -211,8 +246,8 @@ class ViewController: UIViewController {
         return view
     }()
     
+    // MARK: - Saturday element in scrollview
     lazy var saturdayWeatherView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let view = UIVisualEffectView()
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
@@ -221,8 +256,8 @@ class ViewController: UIViewController {
         return view
     }()
     
+    // MARK: - Sunday element in scrollview
     lazy var sundayWeatherView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let view = UIVisualEffectView()
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
@@ -237,7 +272,6 @@ class ViewController: UIViewController {
         get { return self.orientations }
         set { self.orientations = newValue }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -274,6 +308,9 @@ class ViewController: UIViewController {
         dayWeatherScrollView.addSubview(dayWeatherScrollContainer)
         dayWeatherScrollStackLayout()
         dayWeatherViewLayout()
+        
+        mondayWeatherView.contentView.addSubview(mondayStackView)
+        mondayStackViewLayout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -371,7 +408,7 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate([
                                         mondayWeatherView.heightAnchor.constraint(equalToConstant: 140),
                                         mondayWeatherView.widthAnchor.constraint(equalToConstant: 80),
-        
+                                        
                                         tuesdayWeatherView.heightAnchor.constraint(equalToConstant: 140),
                                         tuesdayWeatherView.widthAnchor.constraint(equalToConstant: 80),
                                         
@@ -389,6 +426,15 @@ class ViewController: UIViewController {
                                         
                                         sundayWeatherView.heightAnchor.constraint(equalToConstant: 140),
                                         sundayWeatherView.widthAnchor.constraint(equalToConstant: 80)])
+    }
+    
+    fileprivate func mondayStackViewLayout() {
+        NSLayoutConstraint.activate([
+                                        mondayStackView.topAnchor.constraint(equalTo: mondayWeatherView.topAnchor, constant: 5),
+                                        mondayStackView.centerXAnchor.constraint(equalTo: mondayWeatherView.centerXAnchor),
+                                        
+                                        mondayWeatherImage.widthAnchor.constraint(equalToConstant: 45),
+                                        mondayWeatherImage.heightAnchor.constraint(equalToConstant: 45)])
     }
 }
 extension UIVisualEffectView {
