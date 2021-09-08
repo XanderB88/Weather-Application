@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     }()
     
     lazy var mainWeatherView: MainWeatherView = {
-        let view = MainWeatherView()
+        let view = MainWeatherView(temperature: "33", image: UIImage(named: "cloud") ?? #imageLiteral(resourceName: "snow"), humidity: "83", wind: "5")
         return view
     }()
     

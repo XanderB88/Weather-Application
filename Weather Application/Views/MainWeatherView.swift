@@ -8,7 +8,12 @@
 import UIKit
 
 final class MainWeatherView: UIView {
-    let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+    private let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+    private var temperature: String
+    private var image: UIImage
+    private var humidity: String
+    private var wind: String
+    
     
     lazy var weatherView: UIVisualEffectView = {
         let view = UIVisualEffectView()
@@ -30,14 +35,14 @@ final class MainWeatherView: UIView {
     
     lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "22°C"
+        label.text = "\(temperature)°C"
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         return label
     }()
     
     lazy var weatherImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "sun")
+        imageView.image = image
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -71,7 +76,7 @@ final class MainWeatherView: UIView {
     
     lazy var humidityLabel: UILabel = {
         let label = UILabel()
-        label.text = "80%"
+        label.text = "\(humidity) %"
         label.font = UIFont.systemFont(ofSize: 18, weight: .light)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -96,13 +101,21 @@ final class MainWeatherView: UIView {
     
     lazy var windLabel: UILabel = {
         let label = UILabel()
-        label.text = "10 km"
+        label.text = "\(wind) km"
         label.font = UIFont.systemFont(ofSize: 18, weight: .light)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    init() {
+    init(temperature: String,
+         image: UIImage,
+         humidity: String,
+         wind: String
+      ) {
+        self.temperature = temperature
+        self.image = image
+        self.humidity = humidity
+        self.wind = wind
         super.init(frame:.zero)
         translatesAutoresizingMaskIntoConstraints = false
         setupView()
