@@ -11,13 +11,7 @@ final class WeekDaysWeatherView: UIView {
     let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
     
     // MARK: - Week weather scrollView
-    lazy var dayWeatherScrollView: UIScrollView = {
-        let scrollView = UIScrollView(frame: .zero)
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
+
     lazy var dayWeatherScrollContainer: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [mondayWeatherView, tuesdayWeatherView, wednesdayWeatherView, thursdayWeatherView,fridayWeatherView, saturdayWeatherView, sundayWeatherView])
         stackView.axis = .horizontal
@@ -330,7 +324,6 @@ final class WeekDaysWeatherView: UIView {
     init() {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        dayWeatherScrollView.contentSize = CGSize(width: dayWeatherScrollContainer.frame.width + 850, height: dayWeatherScrollContainer.frame.height)
         setupView()
     }
     
@@ -339,10 +332,8 @@ final class WeekDaysWeatherView: UIView {
     }
     
     fileprivate func setupView() {
-        addSubview(dayWeatherScrollView)
-        dayWeatherScrollLayout()
         
-        dayWeatherScrollView.addSubview(dayWeatherScrollContainer)
+        addSubview(dayWeatherScrollContainer)
         dayWeatherScrollStackLayout()
         dayWeatherViewLayout()
         
@@ -368,19 +359,12 @@ final class WeekDaysWeatherView: UIView {
         sundayStackViewLayout()
     }
     
-    fileprivate func dayWeatherScrollLayout() {
-        NSLayoutConstraint.activate([
-                                        dayWeatherScrollView.topAnchor.constraint(equalTo: topAnchor),
-                                        dayWeatherScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                                        dayWeatherScrollView.heightAnchor.constraint(equalToConstant: 150),
-                                        dayWeatherScrollView.widthAnchor.constraint(equalToConstant: 1200)])
-    }
+  
     
     fileprivate func dayWeatherScrollStackLayout() {
         NSLayoutConstraint.activate([
-                                        dayWeatherScrollContainer.topAnchor.constraint(equalTo: dayWeatherScrollView.topAnchor),
-                                        dayWeatherScrollContainer.leadingAnchor.constraint(equalTo: dayWeatherScrollView.leadingAnchor),
-                                        dayWeatherScrollContainer.bottomAnchor.constraint(equalTo: dayWeatherScrollView.bottomAnchor)])
+                                        dayWeatherScrollContainer.topAnchor.constraint(equalTo: topAnchor),
+                                        dayWeatherScrollContainer.leadingAnchor.constraint(equalTo: leadingAnchor)])
     }
     
     fileprivate func dayWeatherViewLayout() {

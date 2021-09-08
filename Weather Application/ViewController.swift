@@ -34,6 +34,13 @@ class ViewController: UIViewController {
         return view
     }()
     
+    lazy var dayWeatherScrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
     lazy var weekDaysWeatherView: WeekDaysWeatherView = {
         let view = WeekDaysWeatherView()
         return view
@@ -70,15 +77,18 @@ class ViewController: UIViewController {
                                         mainWeatherView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                                         mainWeatherView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
         
-        view.addSubview(weekDaysWeatherView)
+        
+        view.addSubview(dayWeatherScrollView)
+        dayWeatherScrollLayout()
+        dayWeatherScrollView.addSubview(weekDaysWeatherView)
         NSLayoutConstraint.activate([
-                                        weekDaysWeatherView.topAnchor.constraint(equalTo: view.topAnchor, constant: 650),
-                                        weekDaysWeatherView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30)])
+                                        weekDaysWeatherView.topAnchor.constraint(equalTo: dayWeatherScrollView.topAnchor),
+                                        weekDaysWeatherView.leadingAnchor.constraint(equalTo: dayWeatherScrollView.leadingAnchor)])
 
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        weekDaysWeatherView.dayWeatherScrollView.contentSize = CGSize(width: weekDaysWeatherView.dayWeatherScrollContainer.frame.width + 850, height: weekDaysWeatherView.dayWeatherScrollContainer.frame.height)
+        dayWeatherScrollView.contentSize = CGSize(width: weekDaysWeatherView.frame.width + 1000, height: weekDaysWeatherView.frame.height)
     }
     
     
@@ -89,6 +99,13 @@ class ViewController: UIViewController {
                                         cityNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)])
     }
     
+    fileprivate func dayWeatherScrollLayout() {
+        NSLayoutConstraint.activate([
+                                        dayWeatherScrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 650),
+                                        dayWeatherScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+                                        dayWeatherScrollView.heightAnchor.constraint(equalToConstant: 150),
+                                        dayWeatherScrollView.widthAnchor.constraint(equalToConstant: 670)])
+    }
     
 }
 extension UIVisualEffectView {
