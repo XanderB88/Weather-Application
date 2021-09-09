@@ -34,18 +34,6 @@ class ViewController: UIViewController {
         return view
     }()
     
-    lazy var dayWeatherScrollView: UIScrollView = {
-        let scrollView = UIScrollView(frame: .zero)
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
-    lazy var weekDaysWeatherView: WeekDaysWeatherView = {
-        let view = WeekDaysWeatherView()
-        return view
-    }()
-  
     //    Lock portrait orientation
     var orientations = UIInterfaceOrientationMask.portrait
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
@@ -77,34 +65,13 @@ class ViewController: UIViewController {
                                         mainWeatherView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                                         mainWeatherView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
         
-        
-        view.addSubview(dayWeatherScrollView)
-        dayWeatherScrollLayout()
-        dayWeatherScrollView.addSubview(weekDaysWeatherView)
-        NSLayoutConstraint.activate([
-                                        weekDaysWeatherView.topAnchor.constraint(equalTo: dayWeatherScrollView.topAnchor),
-                                        weekDaysWeatherView.leadingAnchor.constraint(equalTo: dayWeatherScrollView.leadingAnchor)])
-
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        dayWeatherScrollView.contentSize = CGSize(width: weekDaysWeatherView.frame.width + 1000, height: weekDaysWeatherView.frame.height)
-    }
-    
     
     // MARK: - WeatherView card with city name constraints
     fileprivate func setupCityNameLabelLayout() {
         NSLayoutConstraint.activate([
                                         cityNameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 220),
                                         cityNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)])
-    }
-    
-    fileprivate func dayWeatherScrollLayout() {
-        NSLayoutConstraint.activate([
-                                        dayWeatherScrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 650),
-                                        dayWeatherScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-                                        dayWeatherScrollView.heightAnchor.constraint(equalToConstant: 150),
-                                        dayWeatherScrollView.widthAnchor.constraint(equalToConstant: 670)])
     }
     
 }
