@@ -7,10 +7,8 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    
-    let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
-    
+class WeatherViewController: UIViewController {
+    //    Views
     lazy var backgroundView: BackgroundView = {
         let view = BackgroundView()
         return view
@@ -45,35 +43,45 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(backgroundView)
-        NSLayoutConstraint.activate([
-                                        backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-                                        backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                                        backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                                        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+        backgroundViewLayout()
         
         view.addSubview(headerView)
-        NSLayoutConstraint.activate([
-                                        headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-                                        headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30)])
-        
+        headerViewLayout()
         
         view.addSubview(cityNameLabel)
         setupCityNameLabelLayout()
         
         view.addSubview(mainWeatherView)
-        NSLayoutConstraint.activate([
-                                        mainWeatherView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                                        mainWeatherView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
+        mainViewLayout()
         
     }
     
-    // MARK: - WeatherView card with city name constraints
+    //    Setup layouts
+    fileprivate func backgroundViewLayout() {
+        NSLayoutConstraint.activate([
+                                        backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+                                        backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                                        backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                                        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+    }
+    
+    fileprivate func headerViewLayout() {
+        NSLayoutConstraint.activate([
+                                        headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+                                        headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30)])
+    }
+    
     fileprivate func setupCityNameLabelLayout() {
         NSLayoutConstraint.activate([
                                         cityNameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 220),
                                         cityNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)])
     }
     
+    fileprivate func mainViewLayout() {
+        NSLayoutConstraint.activate([
+                                        mainWeatherView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                        mainWeatherView.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
+    }
 }
 extension UIVisualEffectView {
     func setGradientBackground(colorTop: UIColor, colorBottom: UIColor){
