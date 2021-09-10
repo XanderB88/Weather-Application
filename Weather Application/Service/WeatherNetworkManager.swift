@@ -6,15 +6,16 @@
 //
 
 import Foundation
+import CoreLocation
 
-protocol WeatherNetworkManagerDelegate{
+protocol WeatherNetworkManagerDelegate {
     func didUpdateWeather(_ weatherNetworkManager: WeatherNetworkManager, weather: WeatherModel)
     func didFailWithError(error: Error)
 }
 
 class WeatherNetworkManager {
-    let apiKey = ""
-    var weatherUrl: String {
+    private let apiKey = ""
+    private var weatherUrl: String {
         return "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric"
     }
     
@@ -22,6 +23,11 @@ class WeatherNetworkManager {
     
     func fetchWeatherByCityName(cityName: String) {
         let urlString = "\(weatherUrl)&\(cityName)"
+        performRequest(with: urlString)
+    }
+    
+    func fetcWeatherByLocation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        let urlString = "\(weatherUrl)&lat=\(latitude)&lon=\(longitude)"
         performRequest(with: urlString)
     }
     
