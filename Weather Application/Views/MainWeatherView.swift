@@ -9,10 +9,10 @@ import UIKit
 
 final class MainWeatherView: UIView {
     private let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
-    private var temperature: String
-    private var image: UIImage
-    private var humidity: String
-    private var wind: String
+//    public var temperature: String
+//    public var image: UIImage
+//    public var humidity: String
+//    public var wind: String
     
     
     lazy var weatherView: UIVisualEffectView = {
@@ -35,14 +35,14 @@ final class MainWeatherView: UIView {
     
     lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(temperature)°C"
+        label.text = "13°C"
         label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         return label
     }()
     
     lazy var weatherImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = image
+        imageView.image = #imageLiteral(resourceName: "sun")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -76,7 +76,7 @@ final class MainWeatherView: UIView {
     
     lazy var humidityLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(humidity) %"
+        label.text = "90 %"
         label.font = UIFont.systemFont(ofSize: 18, weight: .light)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -101,27 +101,19 @@ final class MainWeatherView: UIView {
     
     lazy var windLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(wind) km"
+        label.text = "5 km"
         label.font = UIFont.systemFont(ofSize: 18, weight: .light)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    init(temperature: String,
-         image: UIImage,
-         humidity: String,
-         wind: String
-      ) {
-        self.temperature = temperature
-        self.image = image
-        self.humidity = humidity
-        self.wind = wind
+
+    init() {
         super.init(frame:.zero)
         translatesAutoresizingMaskIntoConstraints = false
         setupView()
     }
-    
-    required init?(coder: NSCoder) {
+
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

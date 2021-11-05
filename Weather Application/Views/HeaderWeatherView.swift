@@ -8,7 +8,7 @@
 import UIKit
 
 final class HeaderWeatherView: UIView {
-    lazy var dayDescriptoinLabel: UILabel = {
+    lazy var dayDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Sunny morning"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -35,7 +35,7 @@ final class HeaderWeatherView: UIView {
     }
     
     fileprivate func setupView() {
-        addSubview(dayDescriptoinLabel)
+        addSubview(dayDescriptionLabel)
         setupDescriptionLabelLayout()
         
         addSubview(weekDayAndTimeLabel)
@@ -44,14 +44,14 @@ final class HeaderWeatherView: UIView {
     
     fileprivate func setupDescriptionLabelLayout() {
         NSLayoutConstraint.activate([
-                                        dayDescriptoinLabel.topAnchor.constraint(equalTo: topAnchor),
-                                        dayDescriptoinLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-                                        dayDescriptoinLabel.bottomAnchor.constraint(equalTo: bottomAnchor)])
+                                        dayDescriptionLabel.topAnchor.constraint(equalTo: topAnchor),
+                                        dayDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                                        dayDescriptionLabel.bottomAnchor.constraint(equalTo: bottomAnchor)])
     }
     
     fileprivate func setupWeekDayAndTimeLabelLayout() {
         NSLayoutConstraint.activate([
-                                        weekDayAndTimeLabel.topAnchor.constraint(equalTo: dayDescriptoinLabel.bottomAnchor, constant: 10),
+                                        weekDayAndTimeLabel.topAnchor.constraint(equalTo: dayDescriptionLabel.bottomAnchor, constant: 10),
                                         weekDayAndTimeLabel.leadingAnchor.constraint(equalTo: leadingAnchor)])
     }
 }

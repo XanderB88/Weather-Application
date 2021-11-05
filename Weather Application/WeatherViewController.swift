@@ -29,7 +29,7 @@ class WeatherViewController: UIViewController {
     }()
     
     lazy var mainWeatherView: MainWeatherView = {
-        let view = MainWeatherView(temperature: "Text", image: UIImage(named: "Text") ?? #imageLiteral(resourceName: "snow"), humidity: "Text", wind: "Text")
+        let view = MainWeatherView()
         return view
     }()
     
@@ -60,6 +60,7 @@ class WeatherViewController: UIViewController {
         mainViewLayout()
         
         locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
         locationManager.requestLocation()
         weatherManager.fetchWeatherByCityName(cityName: "Moscow")
         
