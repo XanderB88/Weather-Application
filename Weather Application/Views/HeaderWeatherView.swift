@@ -18,7 +18,7 @@ final class HeaderWeatherView: UIView {
     
     lazy var weekDayAndTimeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Tusday 7:03AM"
+        label.text = "Tuesday 7:03AM"
         label.font = UIFont.systemFont(ofSize: 18, weight: .light)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

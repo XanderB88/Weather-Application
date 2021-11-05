@@ -8,12 +8,8 @@
 import UIKit
 
 final class MainWeatherView: UIView {
-    private let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
-//    public var temperature: String
-//    public var image: UIImage
-//    public var humidity: String
-//    public var wind: String
     
+    private let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
     
     lazy var weatherView: UIVisualEffectView = {
         let view = UIVisualEffectView()
@@ -24,7 +20,7 @@ final class MainWeatherView: UIView {
         return view
     }()
     
-    // MARK: - Weather topstackView
+    // MARK: - Weather topStackView
     lazy var weatherTopStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [temperatureLabel, weatherImageView])
         stackView.axis = .horizontal
@@ -47,7 +43,7 @@ final class MainWeatherView: UIView {
         return imageView
     }()
     
-    // MARK: - Weather bottomstackView
+    // MARK: - Weather bottomStackView
     lazy var weatherBottomStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [humidityStackView, windStackView])
         stackView.axis = .horizontal
