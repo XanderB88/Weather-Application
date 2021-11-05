@@ -33,6 +33,8 @@ struct WeatherModel {
                 return "cloudy"
             case "03d":
                 return "cloud"
+            case "04n":
+                return "cloud"
             case "13d":
                 return "snow"
             case "10d":

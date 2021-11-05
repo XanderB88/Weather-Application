@@ -15,15 +15,16 @@ struct WeatherData: Decodable {
 }
 
 struct Main: Decodable {
-    let temperature: Double
+    let temp: Double
     let humidity: Int
 }
 
 struct Wind: Decodable {
-    let windSpeed: Double
+    let speed: Double
 }
 
 struct Weather: Decodable {
-    let weatherIcon: String
+    let icon: String
     let description: String
+
 }

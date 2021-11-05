@@ -8,67 +8,37 @@
 import Foundation
 import CoreLocation
 
-protocol WeatherNetworkManagerDelegate {
-    func didUpdateWeather(_ weatherNetworkManager: WeatherNetworkManager, weather: WeatherModel)
-    func didFailWithError(error: Error)
-}
-
 class WeatherNetworkManager {
-    private let apiKey = ""
-    private var weatherUrl: String {
-        return "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric"
-    }
     
-    var delegate: WeatherNetworkManagerDelegate?
-    
-    func fetchWeatherByCityName(cityName: String) {
-        let urlString = "\(weatherUrl)&\(cityName)"
-        performRequest(with: urlString)
-    }
-    
-    func fetcWeatherByLocation(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        let urlString = "\(weatherUrl)&lat=\(latitude)&lon=\(longitude)"
-        performRequest(with: urlString)
-    }
-    
-    func performRequest(with urlString: String) {
-        guard let url = URL(string: urlString) else {
-            return
-        }
+    func fetchWeather(withURL url: String, completion: @escaping (WeatherModel) -> ()) {
         
-        let task = URLSession.shared.dataTask(with: url) { [self] data, response, error in
-            if error != nil {
-                self.delegate?.didFailWithError(error: error!)
-                return
-            }
-            
-            if let safeData = data {
-                if let weather = parseJSON(weatherData: safeData) {
-                    self.delegate?.didUpdateWeather(self, weather: weather)
-                }
-            }
-        }
-        task.resume()
-    }
-    
-    func parseJSON (weatherData: Data) -> WeatherModel? {
-        let decoder = JSONDecoder()
+        guard let url = URL(string: url) else { return }
         
-        do {
-            let decodeData = try decoder.decode(WeatherData.self, from: weatherData)
-            let currentIcon = decodeData.weather[0].weatherIcon
-            let currentTemperature = decodeData.main.temperature
-            let currentHumidity = decodeData.main.humidity
-            let currentWind = decodeData.wind.windSpeed
-            let currentCityName = decodeData.name
-            let currentDescription = decodeData.weather.description
+        URLSession.shared.dataTask(with: url) { data, _, error in
             
-            let currentWeather = WeatherModel(weatherIcon: currentIcon, temperature: currentTemperature, humidity: currentHumidity, windSpeed: currentWind, cityName: currentCityName, description: currentDescription)
+            guard let data = data else { return }
             
-            return currentWeather
-        } catch {
-            delegate?.didFailWithError(error: error)
-            return nil
-        }
+            do {
+                let decoder = JSONDecoder()
+                let weatherDecoded = try decoder.decode(WeatherData.self, from: data)
+                
+                let temp = weatherDecoded.main.temp
+                let hum = weatherDecoded.main.humidity
+                let wind = weatherDecoded.wind.speed
+                
+                let description = weatherDecoded.weather[0].description
+                let icon = weatherDecoded.weather[0].icon
+                
+                let name = weatherDecoded.name
+            
+                let weather = WeatherModel(weatherIcon: icon, temperature: temp, humidity: hum, windSpeed: wind, cityName: name, description: description)
+                
+                completion(weather)
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }.resume()
+        
     }
+   
 }
